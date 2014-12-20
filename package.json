@@ -1,0 +1,26 @@
+{
+  "name": "",
+  "description": "mgtstock",
+  "version": "",
+  "author": "",
+  "homepage": "",
+  "repository": {
+    "type": "",
+    "url": ""
+  },
+  "main": "gulpfile.js",
+  "keywords": [],
+  "readmeFilename": "README.md",
+  "gitHead": "",
+  "devDependencies": {
+    "gulp": "^3.6.2",
+    "gulp-cache": "^0.1.11",
+    "gulp-clean": "^0.3.0",
+    "gulp-concat": "^2.2.0",
+    "gulp-minify-css": "^0.3.4",
+    "gulp-notify": "^1.3.1",
+    "gulp-rename": "^1.2.0",
+    "gulp-uglify": "^0.3.0",
+    "gulp-jshint": "^1.9.0"
+  }
+}

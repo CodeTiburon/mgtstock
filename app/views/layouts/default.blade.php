@@ -49,8 +49,8 @@
                     <li><a href="{{{ URL::to('user') }}}">Signed in as {{{ Auth::user()->username }}}</a></li>
                     <li><a href="{{{ URL::to('user/logout') }}}">Sign out</a></li>
                     @else
-                    <li {{ (Request::is('user/login') ? ' class="active"' : '') }}><a href="{{{ URL::to('user/login') }}}">Sign in</a></li>
-                    <li {{ (Request::is('user/create') ? ' class="active"' : '') }}><a href="{{{ URL::to('user/create') }}}">Sign up</a></li>
+                    <li {{ (Request::is('users/login') ? ' class="active"' : '') }}><a href="{{{ URL::to('users/login') }}}">Sign in</a></li>
+                    <li {{ (Request::is('users/create') ? ' class="active"' : '') }}><a href="{{{ URL::to('users/create') }}}">Sign up</a></li>
                     @endif
                   </ul>
                 </div><!--/.nav-collapse -->

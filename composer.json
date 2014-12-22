@@ -8,12 +8,13 @@
 		"laravel/framework": "4.2.*",
                 "doctrine/dbal": "2.5.0",
                 "aws/aws-sdk-php": "2.7.12",
-		"barryvdh/laravel-ide-helper": "~1.11"
+                "zizaco/confide": "~4.0@dev"		
 	},
         "require-dev": {
             "way/generators": "~2.0",
             "fzaninotto/faker": "v1.3.0",
-            "barryvdh/laravel-debugbar": "v1.8.4"
+            "barryvdh/laravel-debugbar": "v1.8.4",
+            "barryvdh/laravel-ide-helper": "~1.11"
         },
 	"autoload": {
 		"classmap": [

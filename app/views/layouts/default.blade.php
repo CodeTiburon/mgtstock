@@ -46,8 +46,8 @@
                     @if (Auth::user()->hasRole('admin'))
                     <li><a href="{{{ URL::to('admin') }}}">Admin Panel</a></li>
                     @endif
-                    <li><a href="{{{ URL::to('user') }}}">Signed in as {{{ Auth::user()->username }}}</a></li>
-                    <li><a href="{{{ URL::to('user/logout') }}}">Sign out</a></li>
+                    <li><a href="{{{ URL::to('users') }}}">Signed in as {{{ Auth::user()->fullname }}}</a></li>
+                    <li><a href="{{{ URL::to('users/logout') }}}">Sign out</a></li>
                     @else
                     <li {{ (Request::is('users/login') ? ' class="active"' : '') }}><a href="{{{ URL::to('users/login') }}}">Sign in</a></li>
                     <li {{ (Request::is('users/create') ? ' class="active"' : '') }}><a href="{{{ URL::to('users/create') }}}">Sign up</a></li>
@@ -61,16 +61,15 @@
             <div class="container" role="main">
                     <!-- Notifications -->
                     @include('notifications')
-                    <!-- ./ notifications -->
-
+                    <!-- ./ notifications -->                    
                     <!-- Content -->
                     @yield('content')
-                    <!-- ./ content -->
+                    <!-- ./ content -->                       
             </div>
             <!-- ./ container -->
         <!-- Javascripts -->
-        <script src="{{asset('/js/vendors.min.js')}}"></script>
-        <script src="{{asset('/js/app.js')}}"></script>
+        <script src="{{asset('assets/js/vendors.min.js')}}"></script>
+        <script src="{{asset('assets/js/app.js')}}"></script>
 
         @yield('scripts')
     </body>

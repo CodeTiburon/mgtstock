@@ -13,7 +13,7 @@ return array(
 	|
 	*/
 
-	'debug' => true,
+	'debug' => false,
 
 	/*
 	|--------------------------------------------------------------------------
@@ -121,8 +121,14 @@ return array(
 		'Illuminate\Validation\ValidationServiceProvider',
 		'Illuminate\View\ViewServiceProvider',
 		'Illuminate\Workbench\WorkbenchServiceProvider',
+            // App providers
                 'Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider',
-                'Zizaco\Confide\ServiceProvider'
+                'Barryvdh\Debugbar\ServiceProvider',
+                'Way\Generators\GeneratorsServiceProvider',
+                'Xethron\MigrationsGenerator\MigrationsGeneratorServiceProvider',
+                'Zizaco\Confide\ServiceProvider',
+                'Zizaco\Entrust\EntrustServiceProvider'
+
 
 	),
 
@@ -190,7 +196,9 @@ return array(
 		'URL'               => 'Illuminate\Support\Facades\URL',
 		'Validator'         => 'Illuminate\Support\Facades\Validator',
 		'View'              => 'Illuminate\Support\Facades\View',
-                'Confide'           => 'Zizaco\Confide\Facade'
+                'Debugbar'          => 'Barryvdh\Debugbar\Facade',
+                'Confide'           => 'Zizaco\Confide\Facade',
+                'Entrust'           => 'Zizaco\Entrust\EntrustFacade',
 
 	),
 

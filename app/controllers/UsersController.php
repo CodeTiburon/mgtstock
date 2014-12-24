@@ -1,11 +1,19 @@
 <?php
+
+
+
 /**
  * UsersController Class
  *
  * Implements actions regarding user management
  */
-class UsersController extends Controller
+class UsersController extends BaseController
 {
+    
+    /**
+     * The layout that should be used for responses.
+     */
+    protected $layout = 'layouts.default';
 
     /**
      * Displays the form for account creation
@@ -14,8 +22,7 @@ class UsersController extends Controller
      */
     public function create()
     {
-        
-        return View::make('user.signup');
+        $this->layout->content = View::make(Config::get('confide::signup_form'));
     }
 
     /**
@@ -63,7 +70,7 @@ class UsersController extends Controller
         if (Confide::user()) {
             return Redirect::to('/');
         } else {
-            return View::make(Config::get('confide::login_form'));
+            $this->layout->content = View::make(Config::get('confide::login_form'));
         }
     }
 

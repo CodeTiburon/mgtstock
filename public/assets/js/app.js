@@ -8,6 +8,6 @@
      return 'hello';
  };
 
-alert(app());
+
 
 

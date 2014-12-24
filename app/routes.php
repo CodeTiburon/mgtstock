@@ -12,11 +12,10 @@
 */
 
 Route::get('/', 'HomeController@showWelcome');
-//
 
 // Confide routes
 Route::get('users/create', 'UsersController@create');
-Route::post('users/create', 'UsersController@store');
+Route::post('users', 'UsersController@store');
 Route::get('users/login', 'UsersController@login');
 Route::post('users/login', 'UsersController@doLogin');
 Route::get('users/confirm/{code}', 'UsersController@confirm');
@@ -26,6 +25,11 @@ Route::get('users/reset_password/{token}', 'UsersController@resetPassword');
 Route::post('users/reset_password', 'UsersController@doResetPassword');
 Route::get('users/logout', 'UsersController@logout');
 
+
+Route::get('/test', function()
+{
+    dd(Queue::getDefaultDriver());
+});
 
 Route::get('/user', function()
 {
@@ -78,3 +82,5 @@ Route::get('/user', function()
   }
  
 });
+//
+

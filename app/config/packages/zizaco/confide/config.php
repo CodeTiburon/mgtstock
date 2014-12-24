@@ -46,10 +46,10 @@ return array(
     |
     |
     */
-    'login_form' =>             'confide::login',
-    'signup_form' =>            'confide::signup',
-    'forgot_password_form' =>   'confide::forgot_password',
-    'reset_password_form' =>    'confide::reset_password',
+    'login_form' =>             'user.login',
+    'signup_form' =>            'user.signup',
+    'forgot_password_form' =>   'user.forgot_password',
+    'reset_password_form' =>    'user.reset_password',
 
     /*
     |--------------------------------------------------------------------------
@@ -106,7 +106,7 @@ return array(
     |
     */
     'signup_email'   => true,
-    'signup_confirm' => true,
+    'signup_confirm' => false,
 
     /*
     |--------------------------------------------------------------------------

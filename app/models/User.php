@@ -26,7 +26,18 @@ class User extends Eloquent implements UserInterface, RemindableInterface, Confi
 	 *
 	 * @var array
 	 */
-	protected $hidden = array('password', 'remember_token');
+	protected $hidden = ['password', 'remember_token'];
+        
+        /**
+         * The attributes can be mass-assignable.
+         * @var array
+         */
+        protected $fillable = ['fullname', 'email', 'password'];
+        
+        /**
+         * @var array
+         */
+        protected $guarded = ['id'];
         
         /**
          * User following relationship
@@ -42,6 +53,13 @@ class User extends Eloquent implements UserInterface, RemindableInterface, Confi
         public function followers()
         {
           return $this->belongsToMany('User', 'user_follows', 'follow_id', 'user_id');
+        }
+        
+        /**
+         * Returns user full name
+         */
+        public function getFullname() {
+            return $this->fullname;
         }
 
 }

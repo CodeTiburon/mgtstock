@@ -1,7 +1,5 @@
 <?php
-
-
-
+use \Stock\Repository\UserRepository;
 /**
  * UsersController Class
  *
@@ -14,6 +12,12 @@ class UsersController extends BaseController
      * The layout that should be used for responses.
      */
     protected $layout = 'layouts.default';
+    
+     public function __construct(UserRepository $repo)
+     {
+         parent::__construct();  
+         $this->repo = $repo;
+     }
 
     /**
      * Displays the form for account creation
@@ -32,18 +36,19 @@ class UsersController extends BaseController
      */
     public function store()
     {
-        $repo = App::make('UserRepository');
+        $repo = $this->repo;
         $user = $repo->signup(Input::all());
+        $fullname = $user->getFullname();
 
         if ($user->id) {
-            if (Config::get('confide::signup_email')) {
+           if (Config::get('confide::signup_email')) {
                 Mail::queueOn(
                     Config::get('confide::email_queue'),
                     Config::get('confide::email_account_confirmation'),
-                    compact('user'),
+                    compact('user','fullname'),
                     function ($message) use ($user) {
                         $message
-                            ->to($user->email, $user->username)
+                            ->to($user->email, $user->getFullname())
                             ->subject(Lang::get('confide::confide.email.account_confirmation.subject'));
                     }
                 );
@@ -67,6 +72,7 @@ class UsersController extends BaseController
      */
     public function login()
     {
+                    
         if (Confide::user()) {
             return Redirect::to('/');
         } else {
@@ -81,7 +87,7 @@ class UsersController extends BaseController
      */
     public function doLogin()
     {
-        $repo = App::make('UserRepository');
+        $repo = $this->repo;
         $input = Input::all();
 
         if ($repo->login($input)) {
@@ -170,7 +176,7 @@ class UsersController extends BaseController
      */
     public function doResetPassword()
     {
-        $repo = App::make('UserRepository');
+        $repo = $this->repo;
         $input = array(
             'token'                 =>Input::get('token'),
             'password'              =>Input::get('password'),

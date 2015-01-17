@@ -14,7 +14,8 @@
 		"laravel/framework": "4.2.*",
                 "doctrine/dbal": "2.5.0",
                 "aws/aws-sdk-php": "2.7.12",
-                "zizaco/confide": "dev-username-optional",
+                "doctrine/cache": "1.*",
+                "zizaco/confide": "dev-master",
                 "zizaco/entrust": "1.2.*@dev"
 	},
         "require-dev": {

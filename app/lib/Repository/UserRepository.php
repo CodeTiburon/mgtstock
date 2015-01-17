@@ -1,6 +1,13 @@
 <?php
+namespace Stock\Repository;
 
-
+//use Zizaco\Confide;
+use Confide;
+use App;
+use Config;
+use Hash;
+use Input;
+use User;
 
 /**
  * Class UserRepository
@@ -20,10 +27,9 @@ class UserRepository
     public function signup($input)
     {
         $user = new User;
-
-        $user->email    = array_get($input, 'email');
-        $user->password = array_get($input, 'password');
-
+        
+        $user->fill($input);
+        
         // The password confirmation will be removed from model
         // before saving. This field will be used in Ardent's
         // auto validation.
@@ -34,7 +40,7 @@ class UserRepository
 
         // Save if valid. Password field will be hashed before save
         $this->save($user);
-
+        
         return $user;
     }
 
@@ -77,10 +83,10 @@ class UserRepository
      */
     public function existsButNotConfirmed($input)
     {
-        $user = Confide::getUserByEmailOrUsername($input);
+        $user = Confide::filterIdentitiesAndGetUserByIt($input);
 
         if ($user) {
-            $correctPassword = Hash::check(
+            $correctPassword = \Hash::check(
                 isset($input['password']) ? $input['password'] : false,
                 $user->password
             );
@@ -118,11 +124,11 @@ class UserRepository
     /**
      * Simply saves the given instance
      *
-     * @param  User $instance
+     * @param  \User $instance
      *
      * @return  boolean Success
      */
-    public function save(User $instance)
+    public function save(\User $instance)
     {
         return $instance->save();
     }

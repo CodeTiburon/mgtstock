@@ -21,6 +21,7 @@ var paths = {
   "assets": "public/assets", 
   "scripts": "public/assets/js",
   "styles": "public/assets/css",  
+  "fonts": "public/assets/fonts",  
   "bower": "bower_components"
 };
 
@@ -36,7 +37,10 @@ var vendors = {
   "styles": [
     "./bower_components/bootstrap/dist/css/bootstrap.css",
     "./bower_components/bootstrap/dist/css/bootstrap-theme.css"
-  ] 
+  ],
+  "fonts": [
+    "./bower_components/bootstrap/dist/fonts/*"
+  ]
 };
 
 /*************************************************
@@ -62,6 +66,11 @@ gulp.task('vendors/css', function () {
   return gulp.src(vendors.styles)
     .pipe(concat('vendors.css'))
     .pipe(gulp.dest(paths.styles));
+});
+
+gulp.task('vendors/fonts', function () {
+  return gulp.src(vendors.fonts)
+    .pipe(gulp.dest(paths.fonts));
 });
 
 /*************************************************
@@ -100,4 +109,4 @@ gulp.task('app/cssmin', ['vendors/css'], function() {
     .pipe(gulp.dest(paths.styles));
 });
 
-gulp.task('default', ['app/jsmin', 'app/cssmin']);
+gulp.task('default', ['app/jsmin', 'app/cssmin', 'vendors/fonts']);

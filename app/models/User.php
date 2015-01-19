@@ -32,7 +32,7 @@ class User extends Eloquent implements UserInterface, RemindableInterface, Confi
          * The attributes can be mass-assignable.
          * @var array
          */
-        protected $fillable = ['fullname', 'email', 'password'];
+        protected $fillable = ['firstname', 'lastname', 'email', 'password'];
         
         /**
          * @var array

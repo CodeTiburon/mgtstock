@@ -7,6 +7,8 @@ Sign in ::
 {{-- Content --}}
 @section('content')
 
+<div class="row">
+    <div class="col-md-4 col-md-offset-4">
 <form method="POST" action="{{{ URL::to('/users/login') }}}" accept-charset="UTF-8">
     <input type="hidden" name="_token" value="{{{ Session::getToken() }}}">
     <fieldset>
@@ -23,10 +25,10 @@ Sign in ::
         </label>
         <input class="form-control" tabindex="2" placeholder="{{{ Lang::get('confide::confide.password') }}}" type="password" name="password" id="password">
         </div>
-        <div class="form-group">
-            <label for="remember" class="checkbox">{{{ Lang::get('confide::confide.login.remember') }}}
-                <input type="hidden" name="remember" value="0">
-                <input tabindex="4" type="checkbox" name="remember" id="remember" value="1">
+        <div class="checkbox">
+            <label for="remember" class="checkbox">
+                <input tabindex="4" type="checkbox" name="remember" id="remember" value="1" />
+                {{{ Lang::get('confide::confide.login.remember') }}}
             </label>
         </div>      
         <div class="form-group">
@@ -34,5 +36,7 @@ Sign in ::
         </div>
     </fieldset>
 </form>
+    </div>
+</div>
 
  @stop

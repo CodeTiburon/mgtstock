@@ -5,7 +5,7 @@
         <meta charset="utf-8" />
         <title>
                 @section('title')
-                mgtStock
+                MGT Stock
                 @show
         </title>
         @section('meta_keywords')
@@ -24,7 +24,7 @@
 
     <body>
             <!-- Fixed navbar -->
-            <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+            <nav class="navbar green" role="navigation">
               <div class="container">
                 <div class="navbar-header">
                   <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
@@ -33,7 +33,7 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                   </button>
-                  <a class="navbar-brand" href="#">mgtstock</a>
+                  <a class="navbar-brand" href="#"><i class="glyphicon glyphicon-shopping-cart"></i> MGT Stock</a>
                 </div>
                 <div id="navbar" class="navbar-collapse collapse">
                   <ul class="nav navbar-nav">
@@ -67,6 +67,24 @@
                     <!-- ./ content -->                       
             </div>
             <!-- ./ container -->
+
+
+<footer role="contentinfo">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <hr />
+                <p class="text-center">Designed and built with all the love in the world by CodeTiburon &amp; Interactivated.</p>
+                <p class="text-center">
+                    <a href="#">About</a> |
+                    <a href="#">Terms &amp; Conditions</a> |
+                    <a href="#">Privacy Policy</a>
+                </p>
+            </div>
+        </div>
+    </div>
+</footer>
+
         <!-- Javascripts -->
         <script src="{{asset('assets/js/vendors.min.js')}}"></script>
         <script src="{{asset('assets/js/app.js')}}"></script>

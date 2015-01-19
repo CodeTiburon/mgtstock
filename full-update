@@ -63,26 +63,83 @@ class Colors {
 	}
 }
 
-$cliColors = new Colors();
+class TaskManager
+{
+	private $cliColors = null;
+	private $tasks = array();
 
-echo $cliColors->getColoredString("Pulling updates from git..", "white", "green") . "\n";
-$output = shell_exec('git pull');
-echo $output;
+	public function __construct()
+	{
+		$this->cliColors = new Colors;
+	}
 
-echo $cliColors->getColoredString("Updating composer..", "white", "green") . "\n";
-$output = shell_exec('composer.phar update');
-echo $output;
+	public function addTask($cmd, $message)
+	{
+		$this->tasks[] = array(
+			'cmd' => $cmd,
+			'message' => $message
+		);
+	}
 
-echo $cliColors->getColoredString("Updating bower..", "white", "green") . "\n";
-$output = shell_exec('bower update');
-echo $output;
+	public function run()
+	{
+		// Run tasks
+		foreach ($this->tasks as $task)
+		{
+			echo $this->cliColors->getColoredString($task['message'], "white", "green") . "\n";
+			$output = shell_exec($task['cmd']);
+			echo $output;
+		}
+	}
 
-echo $cliColors->getColoredString("Running gulp..", "white", "green") . "\n";
-$output = shell_exec('gulp');
-echo $output;
+	public function clear()
+	{
+		$this->tasks = array();
+	}
+}
 
-echo $cliColors->getColoredString("Refresh DB and seed with Artisan", "white", "green") . "\n";
-$output = shell_exec('php artisan migrate:refresh --seed');
-echo $output;
+
+// Default config
+$params = array(
+	'refreshDB' => true,
+	'seed' => false
+);
+
+// Parse command line params
+$shortopts = '';
+$longopts = array(
+	'seed::',
+	'help::'
+);
+
+$options = getopt($shortopts, $longopts);
+
+if (isset($options['seed'])) {
+	$params['seed'] = true;
+}
+
+if (isset($options['help'])) {
+	echo 'Usage:
+  full-update [--seed]
+Arguments:
+    --seed 				To seed database
+	    '."\n";
+	exit;
+}
+
+$manager = new TaskManager();
+
+$manager->addTask('git pull', 'Pulling updates from git');
+$manager->addTask('composer.phar update', 'Updating composer');
+$manager->addTask('bower update', 'Updating bower');
+$manager->addTask('gulp', 'Running gulp');
+
+if ($params['seed']) {
+	$manager->addTask('php artisan migrate:refresh --seed', 'Refresh DB and seed with Artisan');
+} else if ($params['refreshDB']) {
+	$manager->addTask('php artisan migrate:refresh', 'Refresh DB with Artisan');
+}
+
+$manager->run();
 
 ?>

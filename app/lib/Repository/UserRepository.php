@@ -1,7 +1,6 @@
 <?php
 namespace Stock\Repository;
 
-//use Zizaco\Confide;
 use Confide;
 use App;
 use Config;

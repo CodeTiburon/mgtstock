@@ -25,6 +25,10 @@ Route::get('users/reset_password/{token}', 'UsersController@resetPassword');
 Route::post('users/reset_password', 'UsersController@doResetPassword');
 Route::get('users/logout', 'UsersController@logout');
 
+// User Shops routes
+Route::get('shops/create', 'ShopsController@create');
+Route::get('shops/list', 'ShopsController@listAction');
+
 
 Route::get('/test', function()
 {

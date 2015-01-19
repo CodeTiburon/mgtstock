@@ -42,3 +42,13 @@ body {
 }
 
 /* Home featured products end */
+
+
+/* Themes list */
+
+.themes-list > .row {
+	border-bottom: 1px solid #ccc;
+	margin-top: 15px;
+}
+
+/* Themes list end */

@@ -1,0 +1,44 @@
+<?php
+
+function colorize($text, $status="SUCCESS") {
+	$out = "";
+	switch($status) {
+		case "SUCCESS":
+			$out = "[42m"; //Green background
+			break;
+		case "FAILURE":
+			$out = "[41m"; //Red background
+			break;
+		case "WARNING":
+			$out = "[43m"; //Yellow background
+			break;
+		case "NOTE":
+			$out = "[44m"; //Blue background
+			break;
+		default:
+			throw new Exception("Invalid status: " . $status);
+	}
+	return chr(27) . "$out" . "$text" . chr(27) . "[0m";
+}
+
+echo colorize("Pulling updates from git..")."\n";
+$output = shell_exec('git pull');
+echo $output;
+
+echo colorize("Updating composer..")."\n";
+$output = shell_exec('composer.phar update');
+echo $output;
+
+echo colorize("Updating bower..")."\n";
+$output = shell_exec('bower update');
+echo $output;
+
+echo colorize("Running gulp..")."\n";
+$output = shell_exec('gulp');
+echo $output;
+
+echo colorize("Artisan refresh DB and seed..")."\n";
+$output = shell_exec('php artisan migrate:refresh --seed');
+echo $output;
+
+?>

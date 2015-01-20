@@ -1,1 +1,54 @@
-body{padding-bottom:30px}.navbar{border-radius:0}.navbar.green{border-bottom:3px solid #3e8f3e}.navbar-brand{color:#3e8f3e}.home-search-box{margin:50px 0 70px}.home-featured-products-container{border-bottom:1px solid #ccc}.home-featured-products-container .product-image{width:100%}.home-featured-products-container .product-price{font-size:120%}.themes-list>.row{border-bottom:1px solid #ccc;margin-top:15px}
+body {
+  padding-bottom: 30px;
+}
+
+/* Navigation */
+.navbar {
+	border-radius: 0;
+}
+
+.navbar.green {
+	border-bottom: 3px solid #3e8f3e;
+}
+
+.navbar-brand {
+	color: #3e8f3e;
+}
+/* Navigation end */
+
+
+/* Home search box */
+.home-search-box {
+	margin: 50px 0 70px;
+}
+/* Home search box end */
+
+/* Home featured products */
+
+.home-featured-products-container {
+	border-bottom: 1px solid #ccc;
+}
+
+.home-featured-products-container div.product-info:nth-child(odd) {
+	/*border-right: 1px solid #ccc; */
+}
+
+.home-featured-products-container .product-image {
+	width: 100%;
+}
+
+.home-featured-products-container .product-price {
+	font-size: 120%;
+}
+
+/* Home featured products end */
+
+
+/* Themes list */
+
+.themes-list > .row {
+	border-bottom: 1px solid #ccc;
+	margin-top: 15px;
+}
+
+/* Themes list end */

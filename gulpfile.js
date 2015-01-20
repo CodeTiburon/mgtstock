@@ -32,13 +32,15 @@ var path = {
         'assets': 'app/assets/', 
         'scripts': 'app/assets/js/',
         'styles': 'app/assets/css/',  
-        'fonts': 'app/assets/fonts/'
+        'fonts': 'app/assets/fonts/',
+        'img': 'app/assets/img/**/*', 
     },
     'dist': {
         'assets': 'public/assets/', 
         'scripts': 'public/assets/js/',
         'styles': 'public/assets/css/',  
-        'fonts': 'public/assets/fonts/'
+        'fonts': 'public/assets/fonts/',
+        'img': 'public/assets/img/'
     }
 };
 
@@ -126,44 +128,43 @@ gulp.task('app:css', function() {
 });
 
 /************************************************
+ * Copy img to public folder
+ ***********************************************/
+gulp.task('app:img', function () {
+  return gulp.src(path.src.img)
+             .pipe(gulp.dest(path.dist.img));
+});
+
+/************************************************
  * Clean assets folders
  ************************************************/
 gulp.task('clean:all', function (cb) {
   del([
     path.dist.scripts+'/**',
     path.dist.styles+'/**',
-    path.dist.fonts+'/**'  
+    path.dist.fonts+'/**',
+    path.dist.img+'/**'  
   ], cb);
 });
 
 /************************************************
  * Run on demand server
  ************************************************/
-gulp.task('server', function() {
+gulp.task('server', ['default'], function() {
   OnDemandServer = require('gulp-ondemand-server');
   var server = new OnDemandServer();
 
-  // You can register a pattern of files to watch and the task to execute
-  // when they change and a request arrive.
-  server.watch('**/*.js', 'lint');
+  //server.watch(path.src.assets+'**/*', 'app');
+  
+  server.watch(path.src.scripts + '/**/*', 'app:js');
+  server.watch(path.src.styles + '/**/*', 'app:css');
+  server.watch(path.src.img + '/**/*', 'app:img');
 
-  // You can watch arrays of patterns, and execute arrays of tasks.
-  server.watch(['styles/*.scss', 'styles/*.sass'], ['sass', 'autoprefixer']);
-
-  // You should register the host you need, as well as the target URL
-  // they're proxying.
-  // For example to proxy everything from localhost:9810 ---> localhost:80
-  server.registerHost('localhost', 'http://localhost');
-
-  // You can have several hosts registered, as long as they share the proxy port
-  // This will proxy http://mydomain.localhost:9810 ---> foo:80
-  server.registerHost('mydomain.localhost', 'http://foo');
-
-  // Another example: example-local:9810 ---> localhost:7653
-  server.registerHost('example-local', 'http://localhost:7653');
-
+  // Proxy everything from mgtstock.com.dev:8080 ---> mgtstock.com.dev:80
+  server.registerHost('mgtstock.com.dev', 'http://mgtstock.com.dev');
+  
   // Start listening in this port
-  server.start(9810);
+  server.start(8080);
 });
 
 
@@ -172,6 +173,6 @@ gulp.task('server', function() {
  *************************************************/
 gulp.task('vendors', ['vendors:js', 'vendors:css', 'vendors:fonts']);
 
-gulp.task('app', ['app:js', 'app:css']);
+gulp.task('app', ['app:js', 'app:css', 'app:img']);
 
 gulp.task('default', ['vendors', 'app']);

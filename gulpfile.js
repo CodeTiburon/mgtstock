@@ -76,12 +76,20 @@ var vendors = {
 gulp.task('vendors:js', function () {
   return gulp.src(vendors.scripts)
              .pipe(concat('vendors.js'))
+             .pipe(gulpif(config.compressing, uglify()))
+             .pipe(rename(function (path) {
+                path.basename += ".min";
+             }))
              .pipe(gulp.dest(path.dist.scripts));
 });
 
 gulp.task('vendors:css', function () {
   return gulp.src(vendors.styles)
              .pipe(concat('vendors.css'))
+             .pipe(gulpif(config.compressing, minifycss()))
+             .pipe(rename(function (path) {
+               path.basename += ".min";
+             }))
              .pipe(gulp.dest(path.dist.styles));
 });
 
@@ -110,7 +118,7 @@ gulp.task('app:js', function() {
  ************************************************/
 gulp.task('app:css', function() {
   return gulp.src([path.src.styles + '/**/*.css', '!'+path.src.styles + '/**/*.min.css'])
-             .pipe(minifycss())
+             .pipe(gulpif(config.compressing, minifycss()))
              .pipe(rename(function (path) {
                path.basename += ".min";
              }))

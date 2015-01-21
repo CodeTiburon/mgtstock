@@ -1,5 +1,10 @@
 {
     "compressing": false,
+    "server": {
+      "port": "8080",
+      "host": "mgtstock.com.dev",
+      "proxyUrl": "http://mgtstock.com.dev"
+    },
     
     "path": {
         "src": {
@@ -13,7 +18,7 @@
             "assets": "public/assets/", 
             "scripts": "public/assets/js/",
             "styles": "public/assets/css/",  
-            "fonts": "public/assets/fonts/",
+            "fonts": "public/assets/css/fonts/",
             "img": "public/assets/img/"
         }
     },

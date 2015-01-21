@@ -44,7 +44,7 @@ function copyVendorCss(vendor, src) {
 
 function copyVendorFonts(vendor, src) {
     return gulp.src(src.fonts)
-               .pipe(gulp.dest(path.dist.fonts+vendor));
+               .pipe(gulp.dest(path.dist.fonts));
 }
 
 
@@ -118,10 +118,10 @@ gulp.task('server', ['default'], function() {
   server.watch(path.src.img + '/**/*', 'app:img');
 
   // Proxy everything from mgtstock.com.dev:8080 ---> mgtstock.com.dev:80
-  server.registerHost('mgtstock.com.dev', 'http://mgtstock.com.dev');
+  server.registerHost(config.server.host, config.server.proxyUrl);
   
   // Start listening in this port
-  server.start(8080);
+  server.start(config.server.port);
 });
 
 

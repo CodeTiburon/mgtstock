@@ -4,15 +4,8 @@ mgtstock.com
 
 ##Environments
 
-Gulp runs in two environments. production and development. By default, gulp runs in development environment. 
 ```
-gulp
-```
-In development mode Gulp will not minify javascript and css. 
-
-To run Gulp in production mode just add `--production`
-```
-gulp --production
+gulp --env=[env name]
 ```
 
 ##Server on demand

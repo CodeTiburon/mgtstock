@@ -13,91 +13,47 @@ var concat = require('gulp-concat');
 var rename = require('gulp-rename');
 var jshint = require('gulp-jshint');
 var gulpif = require('gulp-if');
+var changed = require('gulp-changed');
 
-if (!!(argv.production)) {
-    var config = { 
-        'compressing': true
-    };
-} else {
-    var config = { 
-        'compressing': false
-    };
+/*************************************************
+ * Load config
+ *************************************************/
+var env = '';
+
+if (typeof argv.env === 'string') {
+    env = '-'+argv.env;
 }
 
-/*************************************************
- * Paths
- *************************************************/
-var path = {
-    'src': {
-        'assets': 'app/assets/', 
-        'scripts': 'app/assets/js/',
-        'styles': 'app/assets/css/',  
-        'fonts': 'app/assets/fonts/',
-        'img': 'app/assets/img/**/*', 
-    },
-    'dist': {
-        'assets': 'public/assets/', 
-        'scripts': 'public/assets/js/',
-        'styles': 'public/assets/css/',  
-        'fonts': 'public/assets/fonts/',
-        'img': 'public/assets/img/'
-    }
-};
-
-/*************************************************
- *  JS scripts to support specific order
- *************************************************/
-
-var scripts = [ 
-    path.src.scripts + '/app.js',
-    path.src.scripts + '/**/*.js'
-];
-
-/*************************************************
- * Vendors 
- *************************************************/
-var vendors = {
-  "scripts": [
-    "./bower_components/jquery/dist/jquery.js",
-    "./bower_components/bootstrap/dist/js/bootstrap.js"
-    
-  ],
-  "styles": [
-    "./bower_components/bootstrap/dist/css/bootstrap.css",
-    "./bower_components/bootstrap/dist/css/bootstrap-theme.css"
-  ],
-  "fonts": [
-    "./bower_components/bootstrap/dist/fonts/*"
-  ]
-};
+var config = require('./gulp-conf'+env+'.json');
+var path = config.path;
+var scripts = config.scripts;
+var vendors = config.vendors;
 
 /*************************************************
  * Vendors Tasks: Copy from bower components to public
  *************************************************/
+function copyVendorJs(vendor, src) {
+    return gulp.src(src.scripts)
+               .pipe(gulp.dest(path.dist.scripts+vendor));
+}
 
-gulp.task('vendors:js', function () {
-  return gulp.src(vendors.scripts)
-             .pipe(concat('vendors.js'))
-             .pipe(gulpif(config.compressing, uglify()))
-             .pipe(rename(function (path) {
-                path.basename += ".min";
-             }))
-             .pipe(gulp.dest(path.dist.scripts));
-});
+function copyVendorCss(vendor, src) {
+    return gulp.src(src.styles)
+               .pipe(gulp.dest(path.dist.styles+vendor));
+}
 
-gulp.task('vendors:css', function () {
-  return gulp.src(vendors.styles)
-             .pipe(concat('vendors.css'))
-             .pipe(gulpif(config.compressing, minifycss()))
-             .pipe(rename(function (path) {
-               path.basename += ".min";
-             }))
-             .pipe(gulp.dest(path.dist.styles));
-});
+function copyVendorFonts(vendor, src) {
+    return gulp.src(src.fonts)
+               .pipe(gulp.dest(path.dist.fonts+vendor));
+}
 
-gulp.task('vendors:fonts', function () {
-  return gulp.src(vendors.fonts)
-             .pipe(gulp.dest(path.dist.fonts));
+
+gulp.task('vendors', function () {
+  for (name in vendors) {
+      vendors[name].hasOwnProperty('scripts') && copyVendorJs(name, vendors[name]);
+      vendors[name].hasOwnProperty('styles') && copyVendorCss(name, vendors[name]);
+      vendors[name].hasOwnProperty('fonts') && copyVendorFonts(name, vendors[name]);
+  }
 });
 
 /*************************************************
@@ -106,6 +62,7 @@ gulp.task('vendors:fonts', function () {
 gulp.task('app:js', function() {
   
   return gulp.src( scripts )
+             .pipe(changed(path.dist.scripts))
              .pipe(concat('app.js'))
              .pipe(gulpif(config.compressing, uglify()))
              .pipe(rename(function (path) {
@@ -120,6 +77,7 @@ gulp.task('app:js', function() {
  ************************************************/
 gulp.task('app:css', function() {
   return gulp.src([path.src.styles + '/**/*.css', '!'+path.src.styles + '/**/*.min.css'])
+             .pipe(changed(path.dist.styles))
              .pipe(gulpif(config.compressing, minifycss()))
              .pipe(rename(function (path) {
                path.basename += ".min";
@@ -132,6 +90,7 @@ gulp.task('app:css', function() {
  ***********************************************/
 gulp.task('app:img', function () {
   return gulp.src(path.src.img)
+             .pipe(changed(path.dist.img))
              .pipe(gulp.dest(path.dist.img));
 });
 
@@ -153,8 +112,6 @@ gulp.task('clean:all', function (cb) {
 gulp.task('server', ['default'], function() {
   OnDemandServer = require('gulp-ondemand-server');
   var server = new OnDemandServer();
-
-  //server.watch(path.src.assets+'**/*', 'app');
   
   server.watch(path.src.scripts + '/**/*', 'app:js');
   server.watch(path.src.styles + '/**/*', 'app:css');
@@ -171,8 +128,9 @@ gulp.task('server', ['default'], function() {
 /*************************************************
  * Top level task definitions
  *************************************************/
-gulp.task('vendors', ['vendors:js', 'vendors:css', 'vendors:fonts']);
-
 gulp.task('app', ['app:js', 'app:css', 'app:img']);
 
-gulp.task('default', ['vendors', 'app']);
+gulp.task('default', ['clean:all'], function() {
+    gulp.start('vendors', 'app');
+});
+

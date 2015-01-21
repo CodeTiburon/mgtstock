@@ -1,0 +1,44 @@
+{
+    "compressing": false,
+    
+    "path": {
+        "src": {
+            "assets": "app/assets/", 
+            "scripts": "app/assets/js/",
+            "styles": "app/assets/css/",  
+            "fonts": "app/assets/fonts/",
+            "img": "app/assets/img/**/*"
+        },
+        "dist": {
+            "assets": "public/assets/", 
+            "scripts": "public/assets/js/",
+            "styles": "public/assets/css/",  
+            "fonts": "public/assets/fonts/",
+            "img": "public/assets/img/"
+        }
+    },
+    
+    "scripts": [ 
+        "app/assets/js/app.js",
+        "app/assets/js/**/*.js"
+    ],
+    
+    "vendors": {
+        "bootstrap": {
+            "scripts": [
+              "./bower_components/bootstrap/dist/js/**/*"
+            ],
+            "styles": [
+              "./bower_components/bootstrap/dist/css/**/*"    
+            ],
+            "fonts": [
+              "./bower_components/bootstrap/dist/fonts/*"
+            ]
+        },
+        "jquery": {
+            "scripts": [
+              "./bower_components/jquery/dist/**/*"
+            ]
+        }
+    }
+}

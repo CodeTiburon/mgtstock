@@ -18,7 +18,8 @@
         <meta name="description" content="" />
         @show
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link rel="stylesheet" href="{{asset('/assets/css/vendors.min.css')}}">
+        <link rel="stylesheet" href="{{asset('/assets/css/bootstrap/bootstrap.min.css')}}">
+        <link rel="stylesheet" href="{{asset('/assets/css/bootstrap/bootstrap-theme.min.css')}}">
         <link rel="stylesheet" href="{{asset('/assets/css/styles.min.css')}}">		
     </head>
 
@@ -86,7 +87,8 @@
 </footer>
 
         <!-- Javascripts -->
-        <script src="{{asset('assets/js/vendors.min.js')}}"></script>
+        <script src="{{asset('assets/js/jquery/jquery.min.js')}}"></script>
+        <script src="{{asset('assets/js/bootstrap/bootstrap.min.js')}}"></script>        
         <script src="{{asset('assets/js/app.min.js')}}"></script>
 
         @yield('scripts')
